@@ -1,0 +1,159 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+ <!-- Product Details Section Begin -->
+ <form action="{% url 'addtocart' var.id %}" method="POST">
+    {% csrf_token %}
+ <section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__left product__thumb nice-scroll">
+                        <a class="pt active" href="#product-1">
+                            <img src="{{var.img1.url}}" alt="">
+                        </a>
+                        <a class="pt" href="#product-2">
+                            <img  src="{{var.img2.url}}" alt="">
+                        </a>
+                        <a class="pt" href="#product-3">
+                            <img  src="{{var.img3.url}}" alt="">
+                        </a>
+                        <a class="pt" href="#product-4">
+                            <img src="{{var.img1.url}}" alt="">
+
+                        </a>
+                    </div>
+                    <div class="product__details__slider__content">
+                        <div class="product__details__pic__slider owl-carousel">
+                            <img data-hash="product-1" class="product__big__img" src="{{var.img1.url}}" alt="">
+                            <img data-hash="product-2" class="product__big__img" src="{{var.img2.url}}" alt="">
+                            <img data-hash="product-3" class="product__big__img" src="{{var.img3.url}}" alt="">
+                            <img data-hash="product-4" class="product__big__img" src="{{var.img1.url}}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product__details__text">
+                    <h3>{{var.product }} {{var.color}} </h3>
+                    {% comment %} <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <span>( 138 reviews )</span>
+                    </div> {% endcomment %}
+                    <div class="product__details__price">$ {{var.price}}</div>
+                    <p><span>Category</span> : {{var.category}}</p>
+                    <div class="product__details__button">
+                        {% comment %} <div class="quantity">
+                            <span>Quantity:</span>
+                            <div class="pro-qty">
+                                <input type="text" value="1">
+                            </div>
+                        </div> {% endcomment %}
+                        {% if size is none %}
+                        <a class="cart-btn" href="{% url 'home' %}"  ><span class="icon_bag_alt"></span> out of stock</a>
+                        {% else %}
+                        {% if user.is_authenticated %}
+                        <button class="cart-btn" type="submit" ><span class="icon_bag_alt"></span> Add to cart</button>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="cart-btn"  ><span class="icon_bag_alt"></span> Please Login</a>
+
+                        {% endif %}
+                        {% endif %}
+                        
+                        <ul>
+                            
+                            <li><a href="{% url 'add_to_wishlist' var.id %}"><span class="icon_heart_alt"></span></a></li>
+                           
+                            {% comment %} <li><a href="#"><span class="icon_adjust-horiz"></span></a></li> {% endcomment %}
+                        </ul>
+                    </div>
+                    <div class="product__details__widget">
+                        <ul>
+                            
+                            <li>
+                                <span>Available color:</span>
+                                <div class="color__checkbox">
+									{% for i in img %}
+                                        <label >
+                                            <a href="{% url 'product_details' i.id %}" class="btn"><img style="width : 50px" src="{{ i.img1.url }}" ></a>
+                                        </label>
+										{% endfor %}
+                                    </div>
+                                  
+                                  <script>
+                                    
+
+                                    var dropdown = document.getElementById("color-dropdown");
+                                    dropdown.addEventListener("change", function() {
+                                      var selectedOption = dropdown.options[dropdown.selectedIndex];
+                                      window.location.href = "" + selectedOption.value;
+                                    });
+                                  </script>
+                                  
+
+                            </li>
+                            <li>
+                                <span>Available sizes:</span>
+                                {% if size is none %}
+                                  <span style="color: red;">Out of Stock!</span>
+                                {% else %}
+                                  <div class="size-options d-flex">
+                                    {% for size_option in size %}
+                                      <div class="radio-option ">
+                                        
+                                        <input type="radio" name="size" id="{{ size_option }}" value="{{ size_option }}">
+                                        
+                                        <label for="{{ size_option }}">{{ size_option }}</label>
+                                        &nbsp;
+                                      </div>
+                                      
+                                    {% endfor %}
+                                  </div>
+                                
+                              </li>
+                              
+                            <li>
+                            <div class="my-2">
+                                <span >Availibility: <span style="color : orange" >In Stock</span></span>
+                                </div>
+                                <div class="size__btn">
+                                {% comment %} {% for i in size  %}
+                                    <label  class="active">
+                                        <button class="btn">{{i.stock}}</button>
+                                    </label>
+                                    {% endfor %} {% endcomment %}
+                                </div>
+                            </li>
+                            {% endif %}
+                                <span>Promotions:</span>
+                                <p>Free shipping</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
+                            <p>{{var.product.description}}</p>
+                        </li>
+                        
+                    </ul>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+</section>
+</form>
+<!-- Product Details Section End -->
+{% endblock %}

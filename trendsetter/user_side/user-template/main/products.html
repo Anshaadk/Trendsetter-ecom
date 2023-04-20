@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            
+           
+        </div>
+        <div class="row property__gallery">
+            {% for j in products %}
+            
+            <div class="col-lg-3 col-md-4 col-sm-6 mix women">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="{{j.productimage_set.first.images.url}}">
+                       
+                        <div class="label new">New</div>
+                         <ul class="product__hover">
+        
+                            <li><a href="{ url 'product_details' j.category.slug j.slug %}"><span class="fa fa-eye"></span></a></li>
+                            {% if  user.is_authenticated %}
+                            <li><form method="POST" action="{% url 'add_to_wishlist' product_id=j.id %}">
+                             {% csrf_token %}
+                             <button style="background-color: transparent; border-color: transparent;" type="submit"><a href="#"><span class="icon_heart_alt"></span></a></li></button>
+                           </form></li>
+                           {% endif %}
+
+                           {% if  user.is_authenticated %}
+                           <li>
+                             
+                         <form method="POST" action="{% url 'add_cart' product_id=j.id %}">
+                             {% csrf_token %}
+                             <button style="background-color: transparent; border-color: transparent;" type="submit">
+                                 <a href="#"><span class="icon_bag_alt"></span></a>
+                             </button>
+                         </form>
+                     
+
+                         </li>
+           
+                         {% endif %}
+                        </ul> 
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="#">{{j.product_name}}</a></h6>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product__price">${{ j.price}}</div>
+                    </div>
+                </div>
+            </div>
+      
+            {% endfor %}
+       
+        </div>
+    </div>
+</section>
+{% endblock  %}

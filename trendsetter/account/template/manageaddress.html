@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+  <a class="navbar-brand" href="#">Address Book</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'add_address' %}">Add Address</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="table-responsive mt-3 d-flex justify-content-center">
+  <div style="width: 70%;display: flex;justify-content: center;">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Order Address</th>
+          <th>Zip Code</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in add %}
+        <tr>
+          <td>{{ i.first_name }}</td>
+          <td>{{ i.order_address }}</td>
+          <td>{{ i.zip_code }}</td>
+          <td><a href="{% url 'editaddress' i.id %}"><button class="btn btn-success">Edit</button></a></td>
+          {% if not i.is_disable %}
+          <td><a href="{% url 'disable_address' i.id %}" onclick="return confirm('Are you sure?')"><button class="btn btn-danger">Disable</button></a></td>
+          {% else %}
+          <td><a href="{% url 'enable_address' i.id %}" onclick="return confirm('Are you sure?')"><button class="btn btn-danger">Enable</button></a></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

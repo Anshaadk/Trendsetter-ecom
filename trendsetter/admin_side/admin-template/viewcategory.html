@@ -1,0 +1,53 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+{% extends 'admin_panel.html' %}
+
+{% block adminpack %}
+<div class="card shadow w-100"  >
+  <div class="card-body">
+      <div style="border-bottom: 2px solid orange;" >
+      <div><a href="{% url 'addcategory' %}" class="btn float-end mx-2" style="border: 2px solid green;" >Add New</a></div>
+          <h5 class="p-2" >All Category</h5>  
+      </div>
+      <div class="container-fluid">
+
+          <table class="table table-bordered table-sm" id="example">
+              <thead>
+              <tr>
+                  <th>S. No.</th>
+                  <th>Category Name</th>
+                  <th>Creation Date</th>
+                  <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for i in category %}
+              <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{i.name}}</td>
+                  <td>{{i.created}}</td>
+                  <td>
+                      <a href="{% url 'editcategory' i.id %}" class="btn-success btn"  >Edit</a>
+                      
+                       {% comment %} <a href="{% url 'deletecategory' i.id %}" class=" btn"
+                      
+                         onclick="return confirm('Are You Sure?')" style=" color: red; " >Delete</a> {% endcomment %}
+              
+              {% if not i.is_disable %}
+          <td><a href="{% url 'disable_category' i.id %}" onclick="return confirm('Are you sure?')"><button class="btn btn-danger">Disable</button></a></td>
+          {% else %}
+          <td><a href="{% url 'enable_category' i.id %}" onclick="return confirm('Are you sure?')"><button class="btn btn-danger">Enable</button></a></td>
+          {% endif %}
+              {% endfor %}
+            </td>
+        </tr> 
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+
+  
+{% endblock  %}

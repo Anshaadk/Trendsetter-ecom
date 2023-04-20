@@ -1,0 +1,98 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+ 
+  
+<div class="card shadow m-2">
+  <div class="card-body">
+      <h5 class="p-2 text-dark" style="border-bottom: 2px solid orange;">Edit Address</h5>
+<div class="container-fluid">
+<form method="POST"  enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-row">
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label>First Name</label>
+              <div>{{form.first_name}}</div>
+
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label>Last Name</label>
+              <div>{{form.last_name}}</div>
+            
+          </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+            <label>Land Mark</label>
+            <div>{{form.order_address}}</div>
+          
+        </div>
+    </div>
+
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label>Phone no</label>
+              <div>{{form.phone}}</div>
+
+          </div>
+  
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+            <label>Email</label>
+            <div>{{ form.email }}</div>
+
+            
+        </div>
+    </div>
+
+     
+
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label>Post Code</label>
+              <div>{{form.zip_code}}</div>
+
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label>City</label>
+              <div>{{form.city}}</div>
+
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label>State</label>
+
+              <div>{{form.state}}</div>
+
+          </div>
+      </div>
+
+
+
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label>Country</label>
+              <div>{{ form.country }}</div>
+
+              
+          </div>
+      </div>
+      
+
+
+
+  </div>
+  <input type="submit" value="Submit" class="m-2 px-3 btn btn-warning" >
+
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

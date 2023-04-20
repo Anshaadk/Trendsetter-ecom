@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Order ID</th>
+        <th scope="col">Placed on</th>
+        <th scope="col">Payment Method</th>
+        <th scope="col">Price</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.order_number }}</td>
+        <td>{{ order.created_at }}</td>
+        <td>{{ order.payment.payment_method }}</td>
+        <td>Rs.{{ order.order_total }}</td>
+        <td>
+          {% if order.status == 'Cancelled' %}
+            <span style="color: red">{{ order.status }}</span>
+          {% elif order.status == 'Delivered' %}
+            <span style="color: green">{{ order.status }}</span>
+          {% else %}
+            {{ order.status }}
+          {% endif %}
+        </td>
+        <td>
+          <div>
+            <a href="{% url 'vieworder' order.id %}" class="btn btn-primary text-uppercase mt-2" >Order Info</a>
+          </div>
+          <br>
+          <form action="{% url 'cancelOrder' %}" method='POST' style="width: 10rem">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ order.id }}">
+            {% if order.status != 'Cancelled' and order.status != 'Delivered' %}
+              <div>
+                <button class="btn" type="submit" style="font-size: small;  border: 1px solid red;" onclick="return confirm('Are You Sure ?')">Cancel</button>
+              </div>
+            {% endif %}
+            {% if order.status == 'Cancelled' and order.payment.payment_method == 'Paid by Razorpay' %}
+              <div>
+                <button class="btn">Refunded</button>
+              </div>
+            {% elif order.status == 'Cancelled' and order.payment.payment_method == 'COD' %}
+              <div>
+                <button class="btn"></button>
+              </div>
+            {% elif order.status == 'Delivered' %}
+              <div>
+                <button class="btn"></button>
+              </div>
+            {% endif %}
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+
+{% endblock content %}
+

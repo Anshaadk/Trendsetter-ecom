@@ -1,0 +1,123 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <!-- Breadcrumb Begin -->
+  
+    <!-- Breadcrumb End -->
+
+    <!-- Checkout Section Begin -->
+  
+          {% comment %} {% endfor %} {% endcomment %}
+          <div class="checkout-container d-flex justify-content-center  d-flex ">
+            {% comment %} {% if message %}
+            <p>{{ message }}</p>
+            {% else %} {% endcomment %}
+           
+            <section class="checkout spad container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form class="contact_form" action="{% url 'confirmation' user.id %}" method="POST">
+                            {% csrf_token %}
+                         
+                            <h4 class="font-weight-bold mt-0 mb-4 ml-2 text-center mx-auto">Select your Delivery Address</h4>
+                  
+                            {% for address in address %}
+                                <div class="container">
+                                    <div class="card shadow my-2 col-lg-12">
+                                        <div class="card-body d-flex justify-content-between" >
+                                            {% if address.default == True %}
+                                                <input name="address" type="radio" name="selected_addresses" value="{{ address.id}}" checked >
+                                            {% else %}
+                                                <input name="address" type="radio" name="selected_addresses" value="{{ address.id}}">
+                                            {% endif %} 
+                                            <div style="display: flex; justify-content:space-between ;" >
+                                                <p>{{ address.first_name }},&nbsp;</p>
+                                                
+                                                <p>{{ address.address_line_1 }}</p>
+                                                <p>{{ address.order_address }} ,&nbsp;</p>
+                                                <p>{{ address.city }} ,&nbsp; {{ address.state }},&nbsp;</p>  
+                                                <p>{{ address.phone }},&nbsp;</p>
+                                                <p>{{ address.zip_code }},&nbsp;</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                                    
+                            <div>
+                                <a href="{% url 'confi_add_address'%}" class="btn btn-link">+ Add Address</a>
+                            </div>
+                       
+                    </div>
+                   
+                    <div class="col-lg-6">
+                        <div class="checkout__order">
+                            {% csrf_token %}
+                            <h5>Your order</h5>
+                            <div class="checkout_order_product">
+                                <ul class="list">
+                                    <li class="d-flex justify-content-between">Product <span>Quantity</span><span>Total</span></li>
+                                    {% for item in cart_items %}
+                                    <li class="d-flex justify-content-between"> {{ item.product.product }}<br>({{item.product.color}}) <span class="middle">x {{item.quantity}}</span> <span class="last">₹{{item.price}}</span></li>
+                                    {% endfor %}
+                                    {% comment %} <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
+                                    <li class="d-flex justify-content-between"><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span class="last">$720.00</span></a></li> {% endcomment %}
+                                </ul>
+                                
+                            </div>
+                                            
+                            <div class="checkout_order_total">
+                                <ul>
+                                    <li class="d-flex justify-content-between">Subtotal <span>₹{{st}}</span></li>
+                                    <input type="hidden" name="total" value="{{ st }}">
+                                    <li class="d-flex justify-content-between">Shipping <span> ₹{{shp}}</span></li>
+                                    <input type="hidden" name="shipping" value="{{ shp }}">
+                                    <li class="d-flex justify-content-between">Total <span >₹{{tws}}</span></a></li>
+                                    <input type="hidden" name="amountToBePaid" value="{{ tws }}">
+                                </ul>
+                            </div>
+                            
+                            <div class="checkout_order_widget">
+                                <p>If your wallet amount equals to order amount it will automatically deduct from wallet,otherwise it will continue with razorpay.<p>  
+                                <h4>Grand Total :<span>{{grand_total}}</span></h4>
+            
+                                <hr>
+            
+                                
+                                <button class="site-btn" name="submit"  type="submit" >Place Order</button>
+                                <hr>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+               
+               
+            </div>
+          
+           
+        </section>
+    
+        
+        <!-- Checkout Section End -->
+
+        
+
+        {% endblock  %}
+{% block scripts %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+          {% if msg %}
+          <script>
+            console.log("here");
+            swal("Message !", "{{msg}}", "info");
+          
+          </script>
+          {% endif %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+{% endblock scripts %}

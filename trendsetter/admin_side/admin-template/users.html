@@ -1,0 +1,69 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block adminpack %}
+
+<div class="card shadow">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">All Registered Users</h5>
+        <div class="container-fluid">
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S.No.</th>
+                    {% comment %} <th>Image</th> {% endcomment %}
+                    <th>User Name</th>
+                    {% comment %} <th>Last Name</th> {% endcomment %}
+                    {% comment %} <th>Email</th> {% endcomment %}
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                {% for i in page_obj %}
+                {% if not i.is_superuser %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    {% comment %} <td><img src="{{i.image.url}}" style="width:80px;height:80px"/></td> {% endcomment %}
+                    {% comment %} <td>{{i.first_name}}</td> {% endcomment %}
+                    {% comment %} <td>{{i.last_name}}</td> {% endcomment %}
+                    <td>{{i.username}}</td>
+                    <td>
+                        <form method="POST" action="{% url 'blockuser' i.id %}">
+                            {% csrf_token %}
+                            {% if i.is_active %}
+                              <button type="submit" onclick="return confirm('Are You Sure want to block this user ?')" class="btn btn-danger">Block</button>
+                            {% else %}
+                              <button type="submit" onclick="return confirm('Are You Sure want to unblock this user ?')" class="btn btn-primary">Unblock</button>
+                            {% endif %}
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; previous</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next &rsaquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+{% endblock  %}

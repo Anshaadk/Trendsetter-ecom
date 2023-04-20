@@ -1,0 +1,40 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+
+
+{% extends 'admin_panel.html' %}
+
+{% block adminpack %}
+<div class="card shadow" style="background-color: white;">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid rgb(37, 36, 34);">Edit Product</h5>
+        <form method="post">
+        {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Category:</label>
+                        <select name="categories" style="border: 2px solid rgb(56, 5, 128);" class="form-control" required>
+                                <option value="{{ editted.category.id }}" >{{ editted.category }}</option>
+                                {% for i in category %}
+                                <option value="{{i.id}}">{{i.name}}</option>
+                                {% endfor %}
+                            {% comment %} <input type="text" name="categories" class="form-control"  value="{{ editted.category }}" required> {% endcomment %}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Product Name:</label>
+                        <input type="text" name="name" class="form-control"  style="border: 2px solid rgb(49, 40, 24);" value="{{ editted.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Description:</label>
+                        <textarea type="text" name="desc" class="form-control"  value="{{ editted.description }}" style="border: 2px solid orange; height: 25vh;" placeholder="{{ editted.description }}"></textarea>
+                        {% comment %} <input type="text" name="desc" class="form-control" style="border: 2px solid orange; height: 25vh;" value="{{ editted.description }}" required> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        <input type="submit" value="Save" class="btn btn-success">
+        </form>
+    </div>
+</div>
+{% endblock%}

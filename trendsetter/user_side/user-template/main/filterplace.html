@@ -1,0 +1,233 @@
+{% extends 'base/base.html' %}
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+{% block content %}
+     <!-- Breadcrumb Begin -->
+     <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
+                        <span>Shop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="shop__sidebar">
+                        <div class="sidebar__categories">
+                            <div class="section-title">
+                                <h4>Categories</h4>
+                            </div>
+                            {% comment %} <div class="form-group">
+                                <label for="sort">Sort by:</label>
+                                <select class="form-control" name="sort" id="sort" onchange="location = this.value;">
+                                  <option>Sort</option>
+                                  <option value="{ url 'filterplace' %}?sort=price_asc{{ category_param }}">Price Low to High</option>
+                                  <option value="{ url 'filterplace' %}?sort=price_desc{{ category_param }}">Price High to Low</option>
+                                </select>
+                              </div> {% endcomment %}
+                              
+                              
+                              
+                            
+                            <div class="categories__accordion">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-heading active">
+                                            {% comment %} <a data-toggle="collapse" data-target="#collapseOne">Women</a> {% endcomment %}
+                                        </div>
+                                        <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <ul id="menu-content2" class="menu-content collapse show">
+                                                        <!-- Single Item -->
+                                                        
+                                                            <ul id="menu-content2" class="menu-content collapse show">
+                                                              <!-- Single Item -->
+                                                              {% for i in categories %}
+                                                                <li class="main-nav-list"><a href="{% url 'category' i.id %}" ><span
+                                                                        class="lnr lnr-arrow-right"></span> {{i.name}} <span class="number"></span></a>
+                                                                </li>
+                                                                {% endfor %}
+                                                              <!-- Single Item -->
+                                                            
+                                                            </ul>
+                                                          
+                                                        
+                                              
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sidebar__filter">
+                            <div class="section-title">
+                                <h4>Shop by price</h4>
+                            </div>
+                            <div class="filter-range-wrap">
+                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="100" data-max="3000"></div>
+                                <div class="range-slider">
+                                    <div class="price-input">
+                                        <p>Price:</p>
+                                        <form method="GET" action="{% url 'filterplace' cid=0 %}" id="filterForm">
+                                            <div class="form-group">
+                                                <label for="minamount">Min price:</label>
+                                                <input name="min_price" type="text" id="minamount" value="{{ min_price|floatformat }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="maxamount">Max price:</label>
+                                                <input name="max_price" type="text" id="maxamount" value="{{ max_price|floatformat }}">
+                                            </div>
+                                            <button class="site-btn" type="submit" >Filter</button>
+                                        </form>
+                                        
+                                        <!-- JavaScript code to submit the form and refresh the section of the page -->
+                                        
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+             
+                  
+                <div class="col-lg-9 col-md-9">
+                    <div class="row">
+                       {% comment %} {% if Product %} {% endcomment %}
+                       {% for v in page_obj  %}
+            
+                       <div class="col-lg-3 col-md-4 col-sm-6 mix women">
+                           <div class="product__item">
+                               <div class="product__item__pic set-bg" data-setbg="{{v.img1.url}}">
+                                  
+                                   <div class="label new">{{v.color}}</div>
+                                    <ul class="product__hover">
+                   
+                                       <li><a href="{% url 'product_details' v.id %}"><span class="fa fa-eye"></span></a>
+                                    </li>
+                                       
+                                       
+                                       <li>
+                                        
+                                        <a href="{% url 'add_to_wishlist' v.id %}"><span class="icon_heart_alt"></span></a>
+                                    
+                                      </li>
+                                     
+
+                                      
+                                      {% comment %} <li>
+                                        
+                                    
+                                        <a data-sizes="{% for size in sizes %} {% if size.varient.id == variant.id %}{{ size.size }}{% endif %} {% endfor %}"
+                                        data-product-id="{{ variant.id }}" type="submit">
+                                            <span class="icon_bag_alt"></span>
+                                      </a>
+                                    </form>
+                                
+        
+                                    </li> {% endcomment %}
+                      
+                                    
+                                   
+
+                                   </ul> 
+                               </div>
+                               <div class="product__item__text">
+                                   <h6><a href="#">{{v.product}}</a></h6>
+                                   <div class="rating">
+                                       <i class="fa fa-star"></i>
+                                       <i class="fa fa-star"></i>
+                                       <i class="fa fa-star"></i>
+                                       <i class="fa fa-star"></i>
+                                       <i class="fa fa-star"></i>
+                                   </div>
+                                   <div class="product__price">${{v.price}}</div>
+                               </div>
+                           </div>
+                       </div>
+                 
+                       {% endfor %}
+                  
+                        
+                    
+                        <div style="border-color: transparent; border: transparent;" class="col-lg-12 text-center">
+
+                            <div style="border-color: transparent; border: transparent;" class="pagination__option">
+
+                        <div style="border-color: transparent; border: transparent;" class="container">
+                             <nav style="border-color: transparent;" class="pagination__option" aria-label="Page navigation sample"> 
+                                {% if page_obj.has_other_pages %}
+                            <ul style="border-color: transparent; border: transparent;" class="pagination">
+                                &nbsp;
+                                {% if page_obj.has_previours %}
+                                &nbsp;
+                                
+                                <li style="border-color: transparent;border: transparent;" style="display: flex;justify-content: center;" class="page-item disabled"><a style="display: flex;justify-content: center; border: transparent;" class="page-link" href="#"><i style="border-color: transparent;border: transparent;" class="fa fa-angle-right"></i></a></li>&nbsp;
+                                {% else %}
+
+                                <li style="border-color: transparent;border: transparent;" class="page-item  "><a class="page-link" href="?page={{page_obj.previours_page_number}}"><i style="border-color: transparent;border: transparent;" class="fa fa-angle-right"></i></a></li>&nbsp;
+
+                                {% endif %}
+                                {% for i in page_obj.paginator.page_range %}
+                                &nbsp;
+                                {% if page_obj.number == i %}
+                                &nbsp;
+                                <li style="border-color: transparent;border: transparent;" class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+                                {% else %}
+                                &nbsp;
+                                <li style="border-color: transparent;border: transparent;" class="page-item "><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                                {% endif %}
+                                &nbsp;
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                &nbsp;
+                                <li style="border-color: transparent;border: transparent;" class="page-item "><a class="page-link" href="?page={{page_obj.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                                {% else %}
+                                &nbsp;
+                                <li style="border-color: transparent;border: transparent;" class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+
+                                {% endif %}
+                                &nbsp;
+                            </ul>
+                            {% endif %}
+                            </nav>
+                        </div>
+                   
+                     {% comment %} <div class="col-lg-12 text-center">
+                            <div class="pagination__option">
+                                <a href="#">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#"><i class="fa fa-angle-right"></i></a>
+                            </div> 
+                        </div>  {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+
+   
+
+
+  {% endblock  %}

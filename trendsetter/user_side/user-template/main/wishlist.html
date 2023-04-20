@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                    <span>Wishlist</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- breadcrumb start-->
+  <section class="cart_area padding_top">
+    
+    <div class="container">
+        {% if not witems %}
+            <h2 class="text-center">Your wish list is empty</h2>
+            <div class="text-center">
+                <a href="">Continue shopping..</a>
+            </div>
+        {% else %}
+
+        <div class="row">
+            {% comment %} {% if Product %} {% endcomment %}
+            {% for item in witems %}
+ 
+            <div class="col-lg-3 col-md-4 col-sm-6 mix women">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" data-setbg="{{item.product.img1.url}}">
+                       
+                        <div class="label new">{{v.color}}</div>
+                         <ul class="product__hover">
+        
+                            <li><a href="{% url 'product_details' item.product.id %}"><span class="fa fa-eye"></span></a>
+                         </li>
+                            
+                            
+                         <li>
+                         <a href="{% url 'remove_from_wishlist' item.product.id %}">
+                            <span class="icon_close"></span>
+                      </a>
+
+                           
+                           
+                             
+                         
+                             
+                         
+                     
+
+                         </li>
+           
+                         
+                        
+
+                        </ul> 
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a href="#">{{ item.product.product }}</a></h6>
+                        
+                        <div class="product__price">${{ item.product.price }}</div>
+                    </div>
+                </div>
+            </div>
+      
+            {% endfor %}
+        </div>
+        {%endif%}
+    </div>
+</section>
+{% endblock %}

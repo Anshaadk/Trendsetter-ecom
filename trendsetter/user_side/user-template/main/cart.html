@@ -1,0 +1,111 @@
+{% extends 'base/base.html' %}
+{% load my_tags %}
+{% block link %}<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock  %}
+{% load static %}
+
+{% block content %}
+<br><br>
+<section class="cart_area padding_top">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        {% if not cart_items %}
+        <h2 class="text-center">Your cart is empty</h2>
+        <div class="text-center">
+          <a href="{% url 'filterplace' 0 %}" class="text-center">Continue shopping</a>
+        </div>
+        {% else %}
+        <div class="cart_inner">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                  {% comment %} <th scope="col">Stock</th> {% endcomment %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart_items %}
+                <tr>
+                  <td>
+                    <div class="media">
+                      <div class="d-flex align-items-center">
+                        <a href="{% url 'product_details' item.product.id %}"><img src="{{ item.product.img1.url }}" alt="" style="height: 70px;"></a>
+                        <div class="media-body">
+                          <h4>{{ item.product.product }}</h4>
+                          <p>Color : ({{ item.product.color}}) <br>
+                            <p>Size : {{item.size}}</p> </p>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h5>₹{{ item.product.price }}</h5>
+                  </td>
+                  {% if item.product.stock == 0 %}
+                  <td>
+                    <div class="product_count">
+                      <a class="text-danger">Currently Out of Stock</a>
+                    </div>
+                  </td>
+                  <td>
+                    <h5><del>₹{{ item.price }}</del></h5>
+                  </td>
+                  {% else %}
+                  <td class="cart__quantity">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <a href="{% url 'removecartitem' item.product.id %}" class="btn btn-outline-secondary"><i class="fa fa-minus"></i></a>
+                      </div>
+                      <input  name="quantity" type="number" value="{{item.quantity}}" min="0" max="100">
+                      <div class="input-group-append">
+                        <a href="{% url 'addcartitem' item.product.id %}" class="btn btn-outline-secondary"><i class="fa fa-plus"></i></a>
+                      </div>
+                    </div>
+                    
+                  </td>
+                  <td>
+                    <h5>₹{{ item.price }}</h5>
+                  </td>
+                  {% endif %}
+                  <td>
+                    <div class="text-end">
+                      <a href="{% url 'removecartproduct' item.product.id %}" class="text-danger" onclick="return confirm('Are You Sure?')"><i class="icon_close"></i></a>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  <td>
+                    <br><br>
+                    <h5>Subtotal</h5>
+                  </td>
+                  <td>
+                    <br><br>
+                    <h5>₹{{total}}</h5>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+   <br>
+              
+  
+          <div class="checkout_btn_inner float-right  ">
+            <a class="primary-btn" href="{% url 'filterplace' 0 %}">Continue Shopping</a>
+            {% if total > 0 %}
+              <a href="{% url 'checkout' %}" value="submit" class="primary-btn">Proceed to checkout</a>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      </form>
+
+
+{% endblock  %}
