@@ -32,9 +32,14 @@
                 </div>
             </div>
             <div class="col-lg-6">
+                {% for message in messages %}
+                <div class="alert alert-warning col-8 shadow mx-auto text-danger" role="alert">
+                  {{message}}
+                </div>
+                  {% endfor %}
                 <div class="login_form_inner">
                     <h3>Log in to enter</h3>
-                    
+                    <br>
                     <form class="row login_form" action="{% url 'login'%}" method="post" id="contactForm" >
                         {% csrf_token %}
                         <div class="col-md-12 form-group">
