@@ -58,7 +58,7 @@ def admindashboard(request):
                 'total_revenue': total_revenue,
                 
             }
-            
+        
         return render(request, 'dashbord.html',context)
     else: 
         return redirect('admin_login')
