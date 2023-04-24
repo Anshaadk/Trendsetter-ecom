@@ -505,11 +505,13 @@ def editvariant(request, id):
     }
     return render(request, 'editvariant.html', context)
 
-@user_passes_test(lambda u: u.is_superuser, login_url='admin_login')
+# @user_passes_test(lambda u: u.is_superuser, login_url='admin_login')
 def deletevariant(request,id):
     category=get_object_or_404(Variant,id=id)
+    print('ssaasas')
     category.delete()
-    messages.warning(request, "Variant Deleted")
+    
+    # messages.warning(request, "Variant Deleted")
     return redirect(viewproduct)
 
 

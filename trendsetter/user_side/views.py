@@ -268,7 +268,7 @@ def filterplace(request, cid):
         variant = variant.filter(Q(price__gte=min_price) & Q(price__lte=max_price))
 
     categories = Category.objects.all()
-    paginator = Paginator(variant, 6)
+    paginator = Paginator(variant, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
