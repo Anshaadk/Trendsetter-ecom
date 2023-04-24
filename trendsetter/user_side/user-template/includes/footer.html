@@ -9,7 +9,7 @@
                     <div class="footer__logo">
                         <a href="{% url 'home' %}"><img src="img/logo.png" alt=""></a>
                     </div>
-                    <p>It is test website of a ecomerce website created by Anshad</p>
+                    <p>It is a test website of a ecomerce website created by Anshad</p>
                     {% comment %} <div class="footer__payment">
                         <a href="#"><img src="{% static 'img/payment/payment-1.png' %}" alt=""></a>
                         <a href="#"><img src="img/payment/payment-2.png" alt=""></a>
@@ -37,7 +37,7 @@
                         <li><a href="{% url 'myaccount' %}">My Account</a></li>
                         {% comment %} <li><a href="#">Orders Tracking</a></li> {% endcomment %}
                         {% comment %} <li><a href="#">Checkout</a></li> {% endcomment %}
-                        <li><a href="wishlist">Wishlist</a></li>
+                        <li><a href="{% url 'wishlist' %}">Wishlist</a></li>
                     </ul>
                 </div>
             </div>
