@@ -257,7 +257,7 @@ def filterplace(request, cid):
     # Get the min and max price values from the request's GET parameters
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
-
+    
     # Set default values for min_price and max_price if they are not present in GET parameters
     if not min_price:
         min_price = "100"  # Set default min price value as string
@@ -268,13 +268,17 @@ def filterplace(request, cid):
     if min_price and max_price:
         min_price = min_price.replace('$', '')
         max_price = max_price.replace('$', '')
-        variant = variant.filter(Q(price__gte=min_price) & Q(price__lte=max_price))
-
+        if min_price < '99' and max_price<'100':
+            max_price ="3000"
+            min_price ="100"            
+            variant = variant.filter(Q(price__gte=min_price) & Q(price__lte=max_price))
+            
+   
     categories = Category.objects.all()
-    paginator = Paginator(variant, 2)
+    paginator = Paginator(variant, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
+    
     dict_product = {
         'categories': categories,
         'var': variant,
