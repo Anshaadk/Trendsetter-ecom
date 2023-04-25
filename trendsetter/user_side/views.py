@@ -272,6 +272,8 @@ def filterplace(request, cid):
             max_price ="3000"
             min_price ="100"            
             variant = variant.filter(Q(price__gte=min_price) & Q(price__lte=max_price))
+        else:
+            variant = variant.filter(Q(price__gte=min_price) & Q(price__lte=max_price))
             
    
     categories = Category.objects.all()

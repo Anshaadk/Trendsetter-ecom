@@ -98,8 +98,13 @@
                                                 <label for="maxamount">Max price:</label>
                                                 <input name="max_price" type="text" id="maxamount" value="{{ request.GET.max_price }}">
                                             </div>
+                                            
                                             <button class="site-btn" type="submit">Filter</button>
+                                            
+                                            
                                         </form>
+                                        <a style="border-color: transparent;" href="{% url 'filterplace' 0 %}"><button class="site-btn" >reset</button></a>
+                                        
                                     </div>
                                 </div>
                             </div>
