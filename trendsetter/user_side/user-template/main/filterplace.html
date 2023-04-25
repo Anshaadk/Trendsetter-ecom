@@ -79,29 +79,31 @@
                                 <h4>Shop by price</h4>
                             </div>
                             <div class="filter-range-wrap">
+                                {% comment %} {% if filterplace %}
                                 <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="100" data-max="3000"></div>
+                                {% else %} {% endcomment %}
+                                    <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="{{ min_price }}" data-max="{{ max_price }}"></div>
+                                   
+
+                                    
                                 <div class="range-slider">
                                     <div class="price-input">
                                         <p>Price:</p>
                                         <form method="GET" action="{% url 'filterplace' cid=0 %}" id="filterForm">
                                             <div class="form-group">
                                                 <label for="minamount">Min price:</label>
-                                                <input name="min_price" type="text" id="minamount" value="{{ min_price|floatformat }}">
+                                                <input name="min_price" type="text" id="minamount" value="{{ request.GET.min_price }}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="maxamount">Max price:</label>
-                                                <input name="max_price" type="text" id="maxamount" value="{{ max_price|floatformat }}">
+                                                <input name="max_price" type="text" id="maxamount" value="{{ request.GET.max_price }}">
                                             </div>
-                                            <button class="site-btn" type="submit" >Filter</button>
+                                            <button class="site-btn" type="submit">Filter</button>
                                         </form>
-                                        
-                                        <!-- JavaScript code to submit the form and refresh the section of the page -->
-                                        
-                                        
-                                        </div>
                                     </div>
                                 </div>
-                                
+                            </div>
+                            
                 
                         </div>
                         
@@ -184,26 +186,26 @@
                                 <li style="border-color: transparent;border: transparent;" style="display: flex;justify-content: center;" class="page-item disabled"><a style="display: flex;justify-content: center; border: transparent;" class="page-link" href="#"><i style="border-color: transparent;border: transparent;" class="fa fa-angle-right"></i></a></li>&nbsp;
                                 {% else %}
 
-                                <li style="border-color: transparent;border: transparent;" class="page-item  "><a class="page-link" href="?page={{page_obj.previours_page_number}}"><i style="border-color: transparent;border: transparent;" class="fa fa-angle-right"></i></a></li>&nbsp;
+                                <li style="border-color: transparent;border: transparent;" class="page-item  "><a style="display: flex;justify-content: center;border-color: transparent" class="page-link" href="?page={{page_obj.previours_page_number}}"><i style="border-color: transparent;border: transparent;" class="fa fa-angle-right"></i></a></li>&nbsp;
 
                                 {% endif %}
                                 {% for i in page_obj.paginator.page_range %}
                                 &nbsp;
                                 {% if page_obj.number == i %}
                                 &nbsp;
-                                <li style="border-color: transparent;border: transparent;" class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+                                <li style="border-color: transparent;border: transparent;" class="page-item active"><a style="display: flex;justify-content: center;border-color: transparent" class="page-link" href="#"><p style="display: flex;justify-content: center; color: black;">{{i}}</p></a></li>
                                 {% else %}
                                 &nbsp;
-                                <li style="border-color: transparent;border: transparent;" class="page-item "><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                                <li style="border-color: transparent;border: transparent;" class="page-item "><a style="display: flex;justify-content: center;border-color: transparent" class="page-link" href="?page={{i}}"><p style="display: flex;justify-content: center;  color: black;">{{i}}</p></a></li>
                                 {% endif %}
                                 &nbsp;
                                 {% endfor %}
                                 {% if page_obj.has_next %}
                                 &nbsp;
-                                <li style="border-color: transparent;border: transparent;" class="page-item "><a class="page-link" href="?page={{page_obj.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
+                                <li style="border-color: transparent;border: transparent;"  class="page-item "><a style="display: flex;justify-content: center;border-color: transparent;" class="page-link" href="?page={{page_obj.next_page_number}}"><i class="fa fa-angle-right"></i></a></li>
                                 {% else %}
                                 &nbsp;
-                                <li style="border-color: transparent;border: transparent;" class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+                                <li style="border-color: transparent;border: transparent;" class="page-item disabled"><a style="display: flex;justify-content: center;border-color: transparent" class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
 
                                 {% endif %}
                                 &nbsp;

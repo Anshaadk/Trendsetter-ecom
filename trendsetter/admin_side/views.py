@@ -38,6 +38,9 @@ def admin_panel(request):
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_login')
 def admindashboard(request):
     if request.user.is_authenticated:
+        
+        
+
         today_sales = Payment.objects.filter(created_at=datetime.today(), paid=True).aggregate(Sum('amount_paid'))['amount_paid__sum']
         # Total sales and revenue
         orders_count = Order.objects.filter(status__in=['Order Confirmed', 'Shipped', 'Out for delivery']).count()
@@ -50,15 +53,22 @@ def admindashboard(request):
             total_sales = round(total_sales)
         if total_revenue is not None:
             total_revenue = round(total_revenue,2)
+        cod_sum = Payment.objects.filter(payment_method='COD' ).aggregate(Sum('amount_paid'))['amount_paid__sum'] or 0
+        cod_sum = round(cod_sum,2)
+   
+        razorpay_sum = Payment.objects.filter(payment_method='Paid by Razorpay').aggregate(Sum('amount_paid'))['amount_paid__sum'] or 0
+        razorpay_sum = round(razorpay_sum, 2)
+        allcategory = Category.objects.all()
         
         context = {
                 'orders_count': orders_count,
                 'today_sales': today_sales,
                 'total_sales': total_sales,
                 'total_revenue': total_revenue,
-                
-            }
-        
+                'razorpay_sum':razorpay_sum,
+                'cod_sum':cod_sum,
+                'allcategory':allcategory,
+        }
         return render(request, 'dashbord.html',context)
     else: 
         return redirect('admin_login')

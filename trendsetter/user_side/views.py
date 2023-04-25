@@ -246,7 +246,6 @@ def remove_from_wishlist(request,product_id):
     wishItem.delete()
     return redirect(userwishlist)
 
-
 def filterplace(request, cid):
     if cid == 0:
         products = Product.objects.all()
@@ -259,16 +258,20 @@ def filterplace(request, cid):
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
 
-
+    # Set default values for min_price and max_price if they are not present in GET parameters
+    if not min_price:
+        min_price = "100"  # Set default min price value as string
+    if not max_price:
+        max_price = "3000"  # Set default max price value as string
 
     # Filter the products by price if the min_price and max_price GET parameters exist
     if min_price and max_price:
-        min_price = request.GET.get('min_price').replace('$', '')
-        max_price = request.GET.get('max_price').replace('$', '')
+        min_price = min_price.replace('$', '')
+        max_price = max_price.replace('$', '')
         variant = variant.filter(Q(price__gte=min_price) & Q(price__lte=max_price))
 
     categories = Category.objects.all()
-    paginator = Paginator(variant, 8)
+    paginator = Paginator(variant, 2)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -280,6 +283,7 @@ def filterplace(request, cid):
         'max_price': max_price,
     }
     return render(request, 'main/filterplace.html', dict_product)
+
 
 
 
