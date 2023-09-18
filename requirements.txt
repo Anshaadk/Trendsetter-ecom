@@ -21,7 +21,7 @@ odict
 optional-django
 Pillow
 plumber
-psycopg2
+
 pyasn1
 pyasn1-modules
 pycparser
