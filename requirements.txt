@@ -46,3 +46,4 @@ zope.hookable
 zope.interface
 zope.lifecycleevent
 zope.proxy
+whitenoise
